@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bimanda | MAN 2 Model Medan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Ganti dengan logo Bimanda Anda yang sebenarnya (misalnya, logo/bimanda_logo.png) -->
+    <link rel="icon" href="logo/1.png" type="image/png"> 
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-green': '#228B22', /* Forest Green */
+                        'primary-green-dark': '#1A6B1A', /* Darker Forest Green */
+                        beige: '#F5F5DC', /* Light secondary color, similar to cream */
+                        'light-text-primary': '#2D3748', /* text-gray-800 */
+                        'light-text-secondary': '#4A5568', /* text-gray-600 */
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Gaya Umum */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #2D3748; /* text-light-text-primary */
+        }
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #228B22, #F5F5DC); /* Green to Beige gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: #228B22; /* Fallback color for gradient-text */
+        }
+        .floating-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #228B22, #F5F5DC); /* Green to Beige gradient */
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+        .modal {
+            backdrop-filter: blur(10px);
+        }
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .countdown-item {
+            background: rgba(34, 139, 34, 0.1); /* Semi-transparent green */
+            backdrop-filter: blur(10px);
+        }
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #228B22, #F5F5DC); /* Green to Beige gradient */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        .preloader-logo {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .whatsapp-float, .music-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background: #25d366; /* WhatsApp green */
+            color: white;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 100;
+            animation: bounce 2s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .music-float {
+            background: #FF5722; /* Orange for music */
+            bottom: 110px; /* Above WhatsApp button */
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 180px; /* Above music button */
+            right: 40px;
+            width: 50px;
+            height: 50px;
+            background: #228B22; /* Primary Green */
+            color: white;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 99;
+            transition: all 0.3s ease;
+        }
+        .back-to-top:hover {
+            background: #1A6B1A; /* Darker Primary Green */
+            transform: translateY(-5px);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Gaya Khusus Kartu Anggota */
+        .member-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem; /* rounded-2xl */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-lg */
+            transform: scale(1); /* transform */
+            transition: all 0.3s ease; /* transition-all duration-300 */
+            cursor: pointer;
+            width: 100%; /* Ensure card takes full width of its grid column */
+            max-width: 200px; /* Max width for individual cards */
+            height: 250px; /* Fixed height for consistency */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            text-align: center; /* Center text within the card */
+        }
+        .member-card:hover {
+            transform: scale(1.05); /* hover:scale-105 */
+        }
+        .member-default-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+        .member-hover-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(34, 139, 34, 0.9); /* bg-primary-green bg-opacity-90 */
+            color: #fff; /* text-white */
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 2;
+            pointer-events: none; /* Crucial: ensures clicks pass through when hidden */
+        }
+        .member-card:hover .member-default-content {
+            opacity: 0; /* Fade out default content on hover */
+        }
+        .member-card:hover .member-hover-content {
+            opacity: 1; /* Fade in hover content on hover */
+            pointer-events: auto; /* Enable interaction when visible */
+        }
+        /* Ensure image in default content is clickable */
+        .member-default-content .member-image-clickable {
+            cursor: pointer;
+        }
+        .social-icons a {
+            color: #fff; /* text-white */
+            font-size: 1.5rem; /* text-2xl */
+            margin-left: 0.5rem; /* mx-2 */
+            margin-right: 0.5rem; /* mx-2 */
+            transition: color 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: #F5F5DC; /* hover:text-beige */
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem; /* mt-4 */
+        }
+
+        /* Custom icon styles for history section */
+        .history-icon {
+            color: #228B22; /* text-primary-green */
+            font-size: 2.25rem; /* text-4xl */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+
+        /* Custom list styles for achievements */
+        .list-circle {
+            list-style-type: circle;
+        }
+
+        /* Styles for music player pop-up */
+        #music-player-modal {
+            position: fixed;
+            bottom: 180px; /* Position above Back to Top button */
+            right: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            align-items: center;
+            width: 250px; /* Pop-up width */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        #music-player-modal.active {
+            display: flex; /* Show when active */
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #music-player-modal button {
+            background-color: #228B22; /* bg-primary-green */
+            color: #fff; /* text-white */
+            padding: 0.5rem; /* p-2 */
+            border-radius: 9999px; /* rounded-full */
+            font-size: 1.125rem; /* text-lg */
+            transition: background-color 0.3s ease; /* hover:bg-primary-green-dark transition-colors */
+        }
+        #music-player-modal button:hover {
+            background-color: #1A6B1A; /* hover:bg-primary-green-dark */
+        }
+        #music-player-modal .track-info {
+            text-align: center; /* text-center */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+        #music-player-modal .track-info h4 {
+            font-weight: 600; /* font-semibold */
+            font-size: 1.125rem; /* text-lg */
+        }
+        #music-player-modal .track-info p {
+            font-size: 0.875rem; /* text-sm */
+            color: #4A5568; /* text-light-text-secondary */
+        }
+
+        /* Ensure consistent image sizes in gallery */
+        #gallery .group img {
+            width: 100%;
+            height: 250px; /* Fixed height for all gallery images */
+            object-fit: cover; /* Ensure images fill the area without distortion */
+        }
+
+        /* Ensure consistent member profile image sizes */
+        .member-card img {
+            width: 128px; /* Fixed size */
+            height: 128px; /* Fixed size */
+            object-fit: cover; /* Ensure images fill the area without distortion */
+            border-radius: 9999px; /* Perfect circle */
+        }
+
+        /* Text contrast adjustments for light theme */
+        .bg-beige {
+            color: #2D3748; /* text-light-text-primary */
+        }
+        .bg-gray-100 {
+            color: #2D3748; /* text-light-text-primary */
+        }
+        .modal-content {
+            color: #2D3748; /* text-light-text-primary */
+        }
+        .text-gray-600 { /* For secondary text in light mode */
+            color: #4A5568; /* text-light-text-secondary */
+        }
+
+        /* Custom WhatsApp message modal */
+        #whatsapp-info-modal .modal-content {
+            max-width: 350px;
+            text-align: center;
+        }
+        #whatsapp-info-modal .modal-content button {
+            background-color: #228B22; /* bg-primary-green */
+            transition: background-color 0.3s ease; /* hover:bg-primary-green-dark */
+            color: #fff; /* text-white */
+            padding-left: 1.5rem; /* px-4 */
+            padding-right: 1.5rem; /* px-4 */
+            padding-top: 0.5rem; /* py-2 */
+            padding-bottom: 0.5rem; /* py-2 */
+            border-radius: 9999px; /* rounded-full */
+            margin-top: 1rem; /* mt-4 */
+        }
+        #whatsapp-info-modal .modal-content button:hover {
+            background-color: #1A6B1A; /* hover:bg-primary-green-dark */
+        }
+
+        /* Slideshow specific styles */
+        .slideshow-container {
+            position: relative;
+            max-width: 800px; /* Max width for slideshow */
+            margin: auto;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .mySlides {
+            display: none;
+            width: 100%;
+            height: 450px; /* Fixed height for slideshow images */
+            object-fit: cover;
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        .slide-dots {
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 0 0 1rem 1rem;
+        }
+        .dot {
+            cursor: pointer;
+            height: 10px;
+            width: 10px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+        .active-dot, .dot:hover {
+            background-color: #717171;
+        }
+
+        /* Member Profile Modal Styles */
+        #member-profile-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+        #member-profile-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        #member-profile-modal .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            color: #2D3748; /* light-text-primary */
+        }
+        #member-profile-modal.active .modal-content {
+            transform: scale(1);
+        }
+        #member-profile-modal img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #228B22; /* Primary Green */
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        #member-profile-modal .social-icons-modal a {
+            color: #228B22; /* Primary Green */
+            font-size: 2.2rem;
+            margin: 0 0.75rem;
+            transition: color 0.3s ease;
+        }
+        #member-profile-modal .social-icons-modal a:hover {
+            color: #1A6B1A; /* Darker Primary Green */
+        }
+        /* Map specific styles */
+        .map-container {
+            width: 100%;
+            height: 400px; /* Adjust height as needed */
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        /* Hero Carousel Background */
+        #hero-carousel-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 1s ease-in-out; /* Smooth transition for background images */
+            opacity: 0; /* Start hidden for first fade-in */
+        }
+        #hero-carousel-bg.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="font-poppins">
+
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-logo text-white flex flex-col items-center">
+            <img src="logo/1.png" onerror="this.onerror=null;this.src='https://placehold.co/96x96/228B22/F5F5DC?text=Bimanda';" alt="Logo Bimanda MAN 2 Model Medan" class="w-24 h-24 object-contain">
+            <div class="text-2xl mt-4 font-bold text-center">Bimanda | MAN 2 Model Medan</div>
+            <div class="text-lg text-center">Drum Corps Ekstrakurikuler</div>
+        </div>
+    </div>
+
+    <!-- Latar Belakang Partikel -->
+    <div id="particles-js"></div>
+
+    <!-- Bilah Kemajuan Gulir -->
+    <div id="scroll-progress" class="scroll-progress"></div>
+
+    <!-- Bilah Navigasi -->
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-lg transition-all duration-300">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <img src="logo/1.png" onerror="this.onerror=null;this.src='https://placehold.co/32x32/228B22/F5F5DC?text=B';" alt="Logo Bimanda" class="w-8 h-8 object-contain">
+                    <span class="text-xl font-bold gradient-text">Bimanda</span>
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#home" class="hover:text-primary-green transition-colors">Beranda</a>
+                    <a href="#history" class="hover:text-primary-green transition-colors">Sejarah</a>
+                    <a href="#achievements" class="hover:text-primary-green transition-colors">Prestasi</a>
+                    <a href="#members" class="hover:text-primary-green transition-colors">Anggota</a>
+                    <a href="#gallery" class="hover:text-primary-green transition-colors">Galeri</a>
+                    <a href="#contact" class="hover:text-primary-green transition-colors">Kontak</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="mobile-menu-btn" class="md:hidden">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Seluler -->
+    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-white z-40 transform -translate-x-full transition-transform duration-300">
+        <div class="flex flex-col items-center justify-center h-full space-y-8 text-2xl">
+            <a href="#home" class="mobile-menu-link">Beranda</a>
+            <a href="#history" class="mobile-menu-link">Sejarah</a>
+            <a href="#achievements" class="mobile-menu-link">Prestasi</a>
+            <a href="#members" class="mobile-menu-link">Anggota</a>
+            <a href="#gallery" class="mobile-menu-link">Galeri</a>
+            <a href="#contact" class="mobile-menu-link">Kontak</a>
+        </div>
+    </div>
+
+    <!-- Bagian Hero -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative">
+        <div id="hero-carousel-bg"></div> <!-- Carousel background -->
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="relative z-10 text-center text-white px-4">
+            <div class="floating-animation mb-8">
+                <img src="logo/1.png" onerror="this.onerror=null;this.src='https://placehold.co/192x192/228B22/F5F5DC?text=Bimanda';" alt="Logo Bimanda MAN 2 Model Medan" class="w-48 h-48 object-contain mx-auto">
+            </div>
+            <h1 class="text-3xl md:text-5xl font-bold mb-4" data-aos="fade-up">
+                Bimanda | MAN 2 Model Medan
+            </h1>
+            <p class="text-xl md:text-2xl mb-6" data-aos="fade-up" data-aos-delay="200">
+                Membangun Karakter, Mengukir Prestasi Melalui Seni Musik
+            </p>
+
+            <!-- Hitung Mundur Milad -->
+            <div class="text-center text-white mb-8" data-aos="fade-up" data-aos-delay="500">
+                <h3 class="text-2xl font-bold mb-4">Countdown Hari Jadi Kami !</h3>
+                <div id="milad-countdown" class="grid grid-cols-5 gap-2 md:gap-4 max-w-lg mx-auto">
+                    <div class="countdown-item p-2 md:p-4 rounded-lg text-center">
+                        <div id="milad-months" class="text-2xl md:text-3xl font-bold">00</div>
+                        <div class="text-xs md:text-sm">Bulan</div>
+                    </div>
+                    <div class="countdown-item p-2 md:p-4 rounded-lg text-center">
+                        <div id="milad-remaining-days" class="text-2xl md:text-3xl font-bold">00</div>
+                        <div class="text-xs md:text-sm">Hari</div>
+                    </div>
+                    <div class="countdown-item p-2 md:p-4 rounded-lg text-center">
+                        <div id="milad-hours" class="text-2xl md:text-3xl font-bold">00</div>
+                        <div class="text-xs md:text-sm">Jam</div>
+                    </div>
+                    <div class="countdown-item p-2 md:p-4 rounded-lg text-center">
+                        <div id="milad-minutes" class="text-2xl md:text-3xl font-bold">00</div>
+                        <div class="text-xs md:text-sm">Menit</div>
+                    </div>
+                    <div class="countdown-item p-2 md:p-4 rounded-lg text-center">
+                        <div id="milad-seconds" class="text-2xl md:text-3xl font-bold">00</div>
+                        <div class="text-xs md:text-sm">Detik</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-x-4" data-aos="fade-up" data-aos-delay="800">
+                <a href="#history" class="bg-primary-green hover:bg-primary-green-dark px-8 py-3 rounded-full text-white font-semibold transition-all duration-300 transform hover:scale-105">
+                    Jelajahi Sejarah
+                </a>
+                <!-- Tautan Pendaftaran - ganti 'your-registration-page.html' dengan tautan asli Anda -->
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfHXaChRmAJZLv0aNVzHObOS7VIfLq8VsqDnBPML7VZxgdcWw/viewform" class="border-2 border-white hover:bg-white hover:text-primary-green px-8 py-3 rounded-full font-semibold transition-all duration-300">
+                    Gabung Bimanda
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Sejarah & Filosofi -->
+    <section id="history" class="py-20 bg-beige">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Sejarah & Filosofi Bimanda</h2>
+                <p class="text-lg max-w-3xl mx-auto text-light-text-primary">
+                    Menelusuri jejak perjalanan panjang Bimanda MAN 2 Model Medan dalam membentuk karakter dan meraih prestasi.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <div data-aos="fade-right">
+                    <div class="glass-effect p-8 rounded-2xl h-full">
+                        <h3 class="text-2xl font-bold mb-6 text-light-text-primary">Narasi Sejarah Singkat</h3>
+                        <div class="space-y-6 text-justify text-light-text-primary">
+                            <div class="flex items-start space-x-4">
+                                <i class="fas fa-music history-icon"></i>
+                                <div>
+                                    <h4 class="font-semibold text-xl mb-2">1984 - Fondasi Korsik</h4>
+                                    <p class="text-sm">Organisasi ini pertama kali berdiri sebagai Korsik (Korps Musik) tradisional, dipimpin oleh guru-guru di bawah naungan Persatuan Guru Aliyah. Fokus utamanya adalah mendukung acara-acara sekolah dan upacara dengan penampilan musik instrumental.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <i class="fas fa-sync-alt history-icon"></i>
+                                <div>
+                                    <h4 class="font-semibold text-xl mb-2">2000 - Kelahiran Kembali sebagai Bimanda</h4>
+                                    <p class="text-sm">Setelah sempat vakum, organisasi ini dihidupkan kembali sebagai "Bimus" dan segera berganti nama menjadi Bimanda ("Bina Musika MAN 2"). Penamaan ulang ini merupakan hasil branding dari instruktur-instruktur berpengalaman dari Universitas Negeri Medan (UNIMED) dan MAN 1 Medan.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <i class="fas fa-drum history-icon"></i>
+                                <div>
+                                    <h4 class="font-semibold text-xl mb-2">2002-2003 - Transisi ke Drum Band</h4>
+                                    <p class="text-sm">Bimanda mulai bertransformasi menjadi Drum Band, memperkenalkan lebih banyak variasi instrumen perkusi dan tiup, serta mulai berpartisipasi dalam pawai dan festival lokal.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <i class="fas fa-flag history-icon"></i>
+                                <div>
+                                    <h4 class="font-semibold text-xl mb-2">2005 - Menjadi Marching Band</h4>
+                                    <p class="text-sm">Evolusi berlanjut, dan pada tahun 2005, Bimanda resmi menjadi Marching Band. Penekanan lebih diberikan pada koreografi, formasi gerak, dan perpaduan musik yang lebih kompleks.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <i class="fas fa-marching-band history-icon"></i>
+                                <div>
+                                    <h4 class="font-semibold text-xl mb-2">2010 - Puncak Evolusi: Drum Corps</h4>
+                                    <p class="text-sm">Puncak evolusi terjadi saat Bimanda mengambil langkah besar menuju format Drum Corps. Dengan instrumen yang lebih standar, latihan yang lebih intensif, dan fokus pada keunggulan teknis serta artistik.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <i class="fas fa-calendar-alt history-icon"></i>
+                                <div>
+                                    <h4 class="font-semibold text-xl mb-2">1 September - Hari Milad Resmi</h4>
+                                    <p class="text-sm">Sejak tahun 2012, tanggal 1 September secara resmi diperingati sebagai Hari Milad Bimanda, ditetapkan setelah penampilan perdana mereka di kejuaraan nasional Bandung 2013.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8 text-center">
+                            <button id="ask-historian-btn" class="bg-primary-green hover:bg-primary-green-dark px-6 py-3 rounded-full text-white font-semibold transition-all duration-300 transform hover:scale-105 inline-flex items-center">
+                                <i class="fas fa-question-circle mr-2"></i> Tanya Sejarawan Bimanda
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-left">
+                    <div class="glass-effect p-8 rounded-2xl h-full">
+                        <h3 class="text-2xl font-bold mb-6 text-light-text-primary">Visi & Nilai Inti Bimanda</h3>
+                        <div class="space-y-6 text-light-text-primary">
+                            <div>
+                                <h4 class="font-semibold text-xl mb-2 flex items-center"><i class="fas fa-eye text-primary-green mr-3"></i> Visi:</h4>
+                                <p class="text-sm">Menjadi ekstrakurikuler drum corps terdepan yang inovatif, berkarakter, dan berprestasi, mencetak generasi muda yang unggul dalam seni dan kepemimpinan.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-xl mb-2 flex items-center"><i class="fas fa-bullseye text-primary-green mr-3"></i> Misi:</h4>
+                                <ul class="list-none space-y-2 text-sm">
+                                    <li class="flex items-start"><i class="fas fa-chevron-right text-primary-green mt-1 mr-2"></i> Mengembangkan potensi anggota dalam bidang musik, baris-berbaris, dan seni pertunjukan.</li>
+                                    <li class="flex items-start"><i class="fas fa-chevron-right text-primary-green mt-1 mr-2"></i> Meningkatkan disiplin, kerja sama tim, dan jiwa kepemimpinan.</li>
+                                    <li class="flex items-start"><i class="fas fa-chevron-right text-primary-green mt-1 mr-2"></i> Menjunjung tinggi nilai-nilai kebersamaan, kreativitas, dan sportivitas.</li>
+                                    <li class="flex items-start"><i class="fas fa-chevron-right text-primary-green mt-1 mr-2"></i> Berperan aktif dalam mempromosikan nama baik sekolah.</li>
+                                    <li class="flex items-start"><i class="fas fa-chevron-right text-primary-green mt-1 mr-2"></i> Menciptakan lingkungan belajar yang inspiratif dan suportif.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-xl mb-2 flex items-center"><i class="fas fa-handshake text-primary-green mr-3"></i> Budaya & Nilai:</h4>
+                                <p class="text-sm">Bimanda sangat menekankan disiplin, kekompakan tim, dan peningkatan berkelanjutan. Transformasi strategis pada tahun 2012, dengan restrukturisasi organisasi, manajemen pelatihan baru, dan sistem kepemimpinan yang diperbarui, adalah bukti komitmen kami untuk berevolusi dari sekadar band menjadi drum corps berkinerja tinggi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Tanya Sejarawan Bimanda -->
+    <div id="historian-modal" class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-[9999] hidden">
+        <div class="modal-content bg-white rounded-lg p-8 max-w-lg w-full relative transform scale-95 opacity-0 transition-all duration-300 text-light-text-primary">
+            <button class="modal-close-btn absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-2xl">&times;</button>
+            <h3 class="text-3xl font-bold gradient-text mb-4">Tanya Sejarawan Bimanda</h3>
+            <textarea id="historian-question" class="w-full p-3 rounded-lg border border-gray-300 focus:ring-primary-green focus:border-primary-green mb-4 text-light-text-primary" rows="3" placeholder="Tanyakan tentang sejarah Bimanda..."></textarea>
+            <button id="submit-historian-question" class="bg-primary-green hover:bg-primary-green-dark px-6 py-3 rounded-full text-white font-semibold transition-all duration-300 w-full mb-4">
+                Tanyakan
+            </button>
+            <div id="historian-answer" class="bg-gray-100 p-4 rounded-lg text-light-text-primary min-h-[80px] flex items-center justify-center">
+                <span id="historian-answer-text">Jawaban akan muncul di sini.</span>
+                <div id="historian-loading" class="hidden animate-spin rounded-full h-8 w-8 border-b-2 border-primary-green"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bagian Prestasi -->
+    <section id="achievements" class="py-20 bg-beige">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Prestasi & Pengakuan</h2>
+                <p class="text-lg max-w-3xl mx-auto text-light-text-primary">
+                    Daftar penghargaan dan pencapaian Bimanda di kancah nasional dan regional.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="glass-effect p-8 rounded-2xl" data-aos="fade-right">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center text-light-text-primary"><i class="fas fa-trophy text-primary-green mr-3"></i> Sorotan Prestasi 2025</h3>
+                    <ul class="list-none space-y-3 text-lg text-light-text-primary">
+                        <li class="flex items-start"><i class="fas fa-medal text-primary-green mt-1 mr-2"></i> Juara Umum Tanjung Balai Open Marching Festival (24–26 Jan 2025)
+                            <ul class="list-none ml-6 text-base text-light-text-secondary space-y-1">
+                                <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i> Pemenang di hampir semua kategori: Division Challenge, Sound Sport, Street Parade, Best Field Commander, Best Colour Guard, Best Music & Visual Performance.</li>
+                                <li class="flex items-start"><i class="fas fa-minus-circle text-yellow-500 mt-1 mr-2"></i> Runner-up Drumline Battle.</li>
+                            </ul>
+                        </li>
+                        <li class="flex items-start"><i class="fas fa-award text-primary-green mt-1 mr-2"></i> 3rd Place (Senior Challenge) Marching Festival III Asahan (Juni 2025)</li>
+                    </ul>
+                </div>
+                <div class="glass-effect p-8 rounded-2xl" data-aos="fade-left">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center text-light-text-primary"><i class="fas fa-star text-primary-green mr-3"></i> Pencapaian Penting Sebelumnya</h3>
+                    <ul class="list-none space-y-3 text-lg text-light-text-primary">
+                        <li class="flex items-start"><i class="fas fa-star-of-life text-primary-green mt-1 mr-2"></i> GPMB Istora Senayan (2015): Penampilan memukau dengan tema "Under the Sea."</li>
+                        <li class="flex items-start"><i class="fas fa-star-of-life text-primary-green mt-1 mr-2"></i> IMPC 2017: Menampilkan "Kirab Nusantara" di Piala Gubernur UPT.</li>
+                        <li class="flex items-start"><i class="fas fa-star-of-life text-primary-green mt-1 mr-2"></i> USU RMMB Championship 2014: Performa display yang mengesankan.</li>
+                        <li class="flex items-start"><i class="fas fa-star-of-life text-primary-green mt-1 mr-2"></i> Debut Kejuaraan Nasional (Bandung 2013): Penampilan pertama di kancah nasional dengan tema "Ainun-Habibie."</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-12" data-aos="fade-up">
+                 <p class="text-lg max-w-3xl mx-auto text-light-text-primary">
+                    Prestasi ini adalah hasil dedikasi luar biasa dari seluruh anggota, pelatih, dan dukungan penuh dari Kepala MAN 2 Model Medan, Dr. Wuri Tamtama Abdi, serta WKM Humas Dra. Misbah Suaidah.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Anggota -->
+    <section id="members" class="py-20 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Anggota & Struktur Organisasi</h2>
+                <p class="text-lg max-w-3xl mx-auto text-light-text-primary">
+                    Mengenal individu-individu berdedikasi di balik kekuatan Bimanda Drum Corps.
+                </p>
+            </div>
+
+            <!-- Search Bar for Members -->
+            <div class="mb-8 max-w-md mx-auto" data-aos="fade-up" data-aos-delay="50">
+                <input type="text" id="member-search-input" class="w-full p-3 rounded-lg border border-gray-300 focus:ring-primary-green focus:border-primary-green text-light-text-primary" placeholder="Cari anggota berdasarkan nama atau peran...">
+            </div>
+            
+            <!-- Pelatih & Staf -->
+            <div class="mb-16" data-aos="fade-up" data-aos-delay="200">
+                <h3 class="text-3xl font-bold text-center mb-8 gradient-text flex items-center justify-center"><i class="fas fa-chalkboard-teacher mr-3"></i> Tim Pelatih & Pembina</h3>
+                <div id="coaches-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+                    <!-- Pelatih akan dimuat secara dinamis di sini -->
+                </div>
+            </div>
+
+            <!-- Kepemimpinan -->
+            <div class="mb-16" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-3xl font-bold text-center mb-8 gradient-text flex items-center justify-center"><i class="fas fa-user-tie mr-3"></i> Kepengurusan Inti</h3>
+                <div id="leadership-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
+                    <!-- Anggota kepemimpinan akan dimuat secara dinamis di sini -->
+                </div>
+            </div>
+
+            <!-- Anggota yang Paling Sering Hadir -->
+            <div class="mb-16" data-aos="fade-up" data-aos-delay="300">
+                <h3 class="text-3xl font-bold text-center mb-8 gradient-text flex items-center justify-center"><i class="fas fa-users mr-3"></i> Anggota yang Paling Sering Hadir</h3>
+                <div id="active-members-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 justify-items-center">
+                    <!-- Anggota paling sering hadir akan dimuat secara dinamis di sini -->
+                </div>
+            </div>
+
+            <!-- Alumni Bimanda (Wisuda) Slideshow -->
+            <div data-aos="fade-up" data-aos-delay="500">
+                <h3 class="text-3xl font-bold text-center mb-8 gradient-text flex items-center justify-center"><i class="fas fa-graduation-cap mr-3"></i> Alumni Bimanda (Wisuda)</h3>
+                <div id="alumni-slideshow-container" class="slideshow-container">
+                    <!-- Slides will be inserted here by JavaScript -->
+                    <!-- Buttons and dots will also be managed by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Galeri -->
+    <section id="gallery" class="py-20 bg-beige">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Galeri Bimanda</h2>
+                <p class="text-lg max-w-3xl mx-auto text-light-text-primary">
+                    Saksikan momen-momen terbaik dan perjalanan Bimanda dalam gambar. Kunjungi juga saluran media sosial kami!
+                </p>
+            </div>
+
+            <div id="gallery-slideshow-container" class="slideshow-container" data-aos="fade-up" data-aos-delay="200">
+                <!-- Slideshow images will be inserted here by JavaScript -->
+                <!-- Buttons and dots will also be managed by JS -->
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="https://www.youtube.com/@theBimanda" target="_blank" class="bg-primary-green hover:bg-primary-green-dark px-6 py-3 rounded-full text-white font-semibold transition-all duration-300 transform hover:scale-105 inline-flex items-center">
+                    <i class="fab fa-youtube mr-2"></i> Lihat Video Lainnya
+                </a>
+                <a href="https://www.instagram.com/mbbimanda/" target="_blank" class="ml-4 border-2 border-primary-green text-primary-green hover:bg-primary-green hover:text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 inline-flex items-center">
+                    <i class="fab fa-instagram mr-2"></i> Kunjungi Instagram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Kontak -->
+    <section id="contact" class="py-20 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Hubungi Kami</h2>
+                <p class="text-lg max-w-3xl mx-auto text-light-text-primary">
+                    Tertarik untuk bergabung, mengundang atau ingin tahu lebih banyak tentang Bimanda? Jangan ragu untuk menghubungi kami!
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="glass-effect p-8 rounded-2xl" data-aos="fade-right">
+                    <h3 class="text-2xl font-bold mb-6 text-light-text-primary">Informasi Kontak</h3>
+                    <div class="space-y-4 text-light-text-primary">
+                        <div class="flex items-center space-x-4">
+                            <i class="fas fa-map-marker-alt text-primary-green text-2xl"></i>
+                            <div>
+                                <p class="font-semibold">Lokasi:</p>
+                                <p>MAN 2 Model Medan, Jl. Willem Iskandar No.7A, Medan</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <i class="fas fa-envelope text-primary-green text-2xl"></i>
+                            <div>
+                                <p class="font-semibold">Email:</p>
+                                <p>bimanda.man2medan@email.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <i class="fas fa-phone-alt text-primary-green text-2xl"></i>
+                            <div>
+                                <p class="font-semibold">Telepon:</p>
+                                <p>+62 852-6161-6959 (Farsi)</p>
+                                <p>+62 812-2216-1861 (Emil)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <i class="fab fa-instagram text-primary-green text-2xl"></i>
+                            <div>
+                                <p class="font-semibold">Instagram:</p>
+                                <a href="https://www.instagram.com/mbbimanda/" target="_blank" class="text-blue-500 hover:underline">@mbbimanda</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <i class="fab fa-facebook-f text-primary-green text-2xl"></i>
+                            <div>
+                                <p class="font-semibold">Facebook:</p>
+                                <a href="https://www.facebook.com/bimandanumber1/" target="_blank" class="text-blue-500 hover:underline">Bimanda MAN 2 Model Medan</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <i class="fas fa-blog text-primary-green text-2xl"></i>
+                            <div>
+                                <p class="font-semibold">Blog:</p>
+                                <a href="http://www.binamusika.blogspot.com" target="_blank" class="text-blue-500 hover:underline">Binamusika Blogspot</a>
+                                <br>
+                                <a href="https://emil-satria-putra.blogspot.com/" target="_blank" class="text-blue-500 hover:underline">Emil Satria Putra Blog</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <i class="fab fa-whatsapp text-primary-green text-2xl"></i>
+                            <div>
+                                <p class="font-semibold">Grup WhatsApp Informasi:</p>
+                                <a href="https://chat.whatsapp.com/IS4MOw4AMCW0XhcYhpFsTs" target="_blank" class="text-blue-500 hover:underline">Gabung Grup Informasi Bimanda</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-effect p-8 rounded-2xl" data-aos="fade-left">
+                    <h3 class="text-2xl font-bold mb-6 text-light-text-primary">Kirim Pesan kepada Kami</h3>
+                    <form id="contact-form" class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-sm font-semibold mb-2">Nama Lengkap</label>
+                            <input type="text" id="contact-name" class="w-full p-3 rounded-lg border border-gray-300 focus:ring-primary-green focus:border-primary-green text-light-text-primary" placeholder="Nama Anda" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-semibold mb-2">Email</label>
+                            <input type="email" id="contact-email" class="w-full p-3 rounded-lg border border-gray-300 focus:ring-primary-green focus:border-primary-green text-light-text-primary" placeholder="email@contoh.com" required>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-semibold mb-2">Pesan Anda</label>
+                            <textarea id="contact-message" rows="5" class="w-full p-3 rounded-lg border border-gray-300 focus:ring-primary-green focus:border-primary-green text-light-text-primary" placeholder="Tulis pesan Anda di sini..." required></textarea>
+                        </div>
+                        <button type="submit" class="bg-primary-green hover:bg-primary-green-dark px-6 py-3 rounded-full text-white font-semibold transition-all duration-300 w-full">
+                            Kirim Pesan
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <!-- Bagian Peta -->
+            <div class="mt-16" data-aos="fade-up">
+                <h3 class="text-3xl font-bold text-center mb-8 gradient-text flex items-center justify-center"><i class="fas fa-map-marker-alt mr-3"></i> Lokasi Kami</h3>
+                <div class="map-container">
+                    <!-- Google Maps embed untuk lokasi MAN 2 Model Medan dengan koordinat yang diperbarui -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.988019379685!2d98.706848!3d3.603304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303131d0d9c4c70d%3A0x6b8c9d4b0f0e0c0!2sMAN%202%20Model%20Medan!5e0!3m2!1sen!2sid!4v1701380000000!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tombol Mengambang WhatsApp -->
+    <div id="whatsapp-float-btn" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+    <!-- Pop-up Modal WhatsApp Info -->
+    <div id="whatsapp-info-modal" class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-[9999] hidden">
+        <div class="modal-content bg-white rounded-lg p-8 max-w-sm w-full relative transform scale-95 opacity-0 transition-all duration-300 text-light-text-primary">
+            <button class="modal-close-btn absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-2xl">&times;</button>
+            <h3 class="text-2xl font-bold gradient-text mb-4">Hubungi Kami via WhatsApp</h3>
+            <p class="text-light-text-primary mb-6">Ingin mengundang / memesan kami? Kontak kami melalui WhatsApp:</p>
+            <a href="https://wa.me/6285261616959" target="_blank" class="bg-primary-green hover:bg-primary-green-dark px-6 py-3 rounded-full text-white font-semibold transition-all duration-300 inline-flex items-center">
+                <i class="fab fa-whatsapp mr-2"></i> Chat Admin (Farsi)
+            </a>
+            <a href="https://wa.me/6281222161861" target="_blank" class="bg-primary-green hover:bg-primary-green-dark px-6 py-3 rounded-full text-white font-semibold transition-all duration-300 inline-flex items-center mt-2">
+                <i class="fab fa-whatsapp mr-2"></i> Chat Admin (Emil)
+            </a>
+        </div>
+    </div>
+
+    <!-- Tombol Mengambang Pemutar Musik -->
+    <div id="music-toggle-btn" class="music-float">
+        <i class="fas fa-music"></i>
+    </div>
+
+    <!-- Pop-up Pemutar Musik -->
+    <div id="music-player-modal">
+        <div class="track-info">
+            <h4>Bimanda Anthem</h4>
+            <p>Musik Latar Bimanda</p>
+        </div>
+        <audio id="background-music" loop autoplay>
+            <!-- Ganti 'your-music-link.mp3' dengan tautan musik Anda yang sebenarnya -->
+            <source src="https://ia800308.us.archive.org/22/items/we-cant-be-friends/we%20can%27t%20be%20friends.mp3" type="audio/mpeg">
+            Browser Anda tidak mendukung elemen audio.
+        </audio>
+        <button id="play-pause-btn" class="mt-2">
+            <i class="fas fa-pause"></i> <!-- Ikon default adalah pause karena autoplay -->
+        </button>
+    </div>
+
+    <!-- Tombol Kembali ke Atas -->
+    <div id="back-to-top" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Member Profile Overlay Modal -->
+    <div id="member-profile-modal" class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-[9999] hidden">
+        <div class="modal-content bg-white rounded-lg p-8 max-w-sm w-full relative transform scale-95 opacity-0 transition-all duration-300 text-light-text-primary">
+            <button class="modal-close-btn absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-2xl">&times;</button>
+            <img id="modal-member-image" src="" alt="Foto Anggota" class="w-48 h-48 rounded-full object-cover mx-auto mb-4 border-4 border-primary-green">
+            <h3 id="modal-member-name" class="text-3xl font-bold gradient-text mb-2"></h3>
+            <p id="modal-member-role" class="text-primary-green font-semibold text-lg mb-2"></p>
+            <p id="modal-member-division" class="text-sm text-light-text-secondary mb-4"></p>
+            <div id="modal-member-social" class="social-icons-modal flex justify-center space-x-4">
+                <!-- Social icons will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Kirim Pesan -->
+    <div id="contact-success-modal" class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-[9999] hidden">
+        <div class="modal-content bg-white rounded-lg p-8 max-w-sm w-full relative transform scale-95 opacity-0 transition-all duration-300 text-light-text-primary">
+            <button class="modal-close-btn absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-2xl">&times;</button>
+            <h3 class="text-2xl font-bold gradient-text mb-4">Pesan Terkirim!</h3>
+            <p class="text-light-text-primary mb-4">Terima kasih atas pesan Anda. Kami akan segera menghubungi Anda.</p>
+            <button class="bg-primary-green hover:bg-primary-green-dark px-6 py-3 rounded-full text-white font-semibold transition-all duration-300 w-full modal-close-btn">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-primary-green text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Bimanda MAN 2 Model Medan. Hak Cipta Dilindungi.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="https://www.facebook.com/bimandanumber1/" target="_blank" class="hover:text-beige transition-colors"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/mbbimanda/" target="_blank" class="hover:text-beige transition-colors"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@theBimanda" target="_blank" class="hover:text-beige transition-colors"><i class="fab fa-youtube"></i></a>
+                <a href="http://www.binamusika.blogspot.com" target="_blank" class="hover:text-beige transition-colors"><i class="fas fa-blog"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Data Global & Konfigurasi ---
+        const BIMANDA_LOGO_PATH = 'logo/1.png';
+        const BACKGROUND_MUSIC_LINK = 'https://ia800308.us.archive.org/22/items/we-cant-be-friends/we%20can%27t%20be%20friends.mp3';
+        const WHATSAPP_ADMIN_NUMBER = '6285261616959'; // Nomor WhatsApp utama untuk form kontak
+
+        // Array gambar untuk carousel latar belakang Hero Section
+        // Ganti dengan jalur gambar lokal Anda di folder 'moments/' atau 'images/'
+        const heroBackgroundImages = [
+            'moments/FB_IMG 1751554331848.jpg',
+            'moments/FB_IMG 1751551529452.jpg',
+            'moments/FB_IMG_1751551187201.jpg',
+            'moments/FB_IMG 1751551311629.jpg',
+            'moments/FB_IMG 1751551190644.jpg',
+            'moments/FB IMG 1751551440335.jpg',
+            'moments/FB_IMG_1751551303694.jpg',
+            'moments/FB_IMG 1751551542612.jpg',
+            'moments/FB_IMG 1751551064989.jpg',
+            'moments/FB_IMG 1751551695476.jpg',
+            'moments/FB_IMG_1751551164472.jpg',
+            'moments/FB_IMG_1751551565156.jpg',
+            'moments/FB_IMG_1751551686971.jpg',
+            'moments/FB_IMG 1751551719501.jpg',
+            'moments/FB_IMG 1751551308365.jpg',
+            'moments/FB_IMG_1751551169261.jpg',
+            'moments/FB_IMG 1751551701632.jpg',
+            'moments/FB_IMG 1751551699292.jpg',
+            'moments/FB JMG 1751551507019.jpg',
+            'moments/FB_IMG_1751551567371.jpg',
+            'moments/FB_IMG 1751551570697.jpg',
+            'moments/FB_IMG 1751551611664.jpg',
+            'moments/FB IMG 1751551602444.jpg',
+            'moments/FB_IMG_1751551654724.jpg',
+            'moments/FB_IMG 1751551400635.jpg',
+            'moments/FB_IMG_1751551468781.jpg',
+            'moments/FB IMG 1751551480783.jpg',
+            'moments/FB_IMG_1751551518319.jpg',
+            'moments/FB_IMG_1751551523957.jpg',
+            'moments/FB_IMG 1751551474443.jpg',
+            'moments/FB JMG 1751551545873.jpg',
+            'moments/FB_IMG_1751551408349.jpg',
+            'moments/FB_IMG_1751554318448.jpg',
+            'moments/FB_IMG_1751554323072.jpg',
+            'moments/FB IMG 1751551403415.jpg',
+            'moments/FB JMG 1751551526188.jpg',
+            'moments/FB_IMG_1751551415322.jpg',
+            'moments/FB_IMG 1751551281776.jpg',
+            'moments/FB IMG 1751551448453.jpg',
+            'moments/FB IMG 1751551521095.jpg',
+            'moments/FB_IMG_1751551432679.jpg',
+            'moments/FB_IMG 1751551261027.jpg',
+            'moments/FB IMG 1751551171811.jpg',
+            'moments/FB_IMG_1751551544276.jpg',
+            'moments/FB_IMG_1751551262990.jpg',
+            'moments/FB_IMG_1751551286068.jpg',
+            'moments/FB_IMG_1751551540766.jpg',
+            'moments/FB IMG 1751551697458.jpg',
+            'moments/FB JMG 1751551328747.jpg',
+            'moments/FB_IMG_1751551180445.jpg',
+            'moments/FB IMG 1751551074969.jpg',
+            'moments/FB_IMG 1751551251779.jpg',
+            'moments/FB IMG 1751551657389.jpg',
+            'moments/FB_IMG_1751551644625.jpg',
+            'moments/FB_IMG 1751551491412.jpg',
+            'moments/FB_IMG_1751551446553.jpg',
+            'moments/FB IMG 1751551512846.jpg',
+            'moments/FB_IMG_1751551555538.jpg',
+            'moments/FB_IMG 1751551461103.jpg',
+            'moments/FB_IMG 1751551665772.jpg',
+            'moments/FB IMG 1751551471415.jpg',
+            'moments/FB JMG_1751551688888.jpg',
+            'moments/FB_IMG_1751551452924.jpg',
+            'moments/FB_IMG 1751551483060.jpg',
+            'moments/FB JMG 1751551485306.jpg',
+            'moments/FB JMG 1751551613745.jpg',
+            'moments/FB IMG_1751554325600.jpg',
+            'moments/FB_IMG_1751554312025.jpg',
+            'moments/FB IMG 1751551141147.jpg',
+            'moments/FB_IMG_1751551174356.jpg',
+            'moments/FB_IMG_1751551219812.jpg',
+            'moments/FB_IMG 1751551213040.jpg',
+            'moments/FB IMG 1751551217366.jpg',
+            'moments/FB_IMG 1751551327007.jpg',
+            'moments/FB_IMG 1751551061178.jpg',
+            'moments/FB IMG 1751551290215.jpg',
+            'moments/FB_IMG 1751551436335.jpg',
+            'moments/FB IMG 1751551295156.jpg',
+            'moments/FB_IMG_1751551089993.jpg',
+            'moments/FB_IMG_1751551595459.jpg',
+            'moments/FB_IMG_1751551352242.jpg',
+            'moments/FB IMG 1751551504107.jpg',
+            'moments/FB_IMG_1751551508866.jpg',
+            'moments/FB_IMG_1751551573778.jpg',
+            'moments/FB_IMG 1751551587673.jpg',
+            'moments/FB IMG 1751551641463.jpg',
+            'moments/FB IMG_1751551466819.jpg',
+            'moments/FB_IMG_1751551138413.jpg',
+            'moments/FB IMG 1751551609868.jpg',
+            'moments/FB_IMG_1751551684809.jpg',
+            'moments/FB_IMG 1751551096981.jpg',
+            'moments/FB_IMG_1751551412891.jpg',
+            'moments/FB_IMG_1751551510616.jpg',
+            'moments/FB_IMG_1751551537438.jpg',
+            'moments/FB IMG 1751551047066.jpg',
+            'moments/FB_IMG_1751551126901.jpg',
+            'moments/FB_IMG_1751551557304.jpg',
+            'moments/FB_IMG 1751551182873.jpg',
+            'moments/FB_IMG 1751551533787.jpg',
+            'moments/FB_IMG_1751551493744.jpg',
+            'moments/FB_IMG_1751554316484.jpg',
+            'moments/FB_IMG_1751554310211.jpg',
+            'moments/FB IMG 1751551143277.jpg',
+            'moments/FB IMG 1751551159211.jpg',
+            'moments/FB_IMG_1751551161574.jpg',
+            'moments/FB_IMG_1751551215343.jpg',
+            'moments/FB IMG 1751551292491.jpg',
+            'moments/FB_IMG_1751551283871.jpg',
+            'moments/FB_IMG_1751551547495.jpg',
+            'moments/FB IMG 1751551129232.jpg',
+            'moments/FB IMG 1751551067318.jpg',
+            'moments/FB IMG 1751551562499.jpg',
+            'moments/FB_IMG_1751551430146.jpg',
+            'moments/FB_IMG_1751551444510.jpg',
+            'moments/FB IMG 1751551323480.jpg',
+            'moments/FB IMG 1751554333937.jpg',
+            'moments/FB JMG 1751551321759.jpg',
+            'moments/FB_IMG_1751551692968.jpg',
+            'moments/FB_IMG 1751551121560.jpg',
+            'moments/FB IMG 1751551115759.jpg',
+            'moments/FB_IMG_1751551608072.jpg',
+            'moments/FB_IMG_1751551497935.jpg',
+            'moments/FB_IMG_1751551604443.jpg',
+            'moments/FB IMG 1751551463093.jpg',
+            'moments/FB_IMG_1751551662129.jpg',
+            'moments/FB_IMG_1751551478818.jpg',
+            'moments/FB_IMG_1751551549159.jpg',
+            'moments/FB_IMG 1751551487503.jpg',
+            'moments/FB IMG 1751551450704.jpg',
+            'moments/FB_IMG_1751551558983.jpg',
+            'moments/FB_IMG_1751551552128.jpg',
+            'moments/FB IMG 1751554308047.jpg',
+            'moments/FB IMG 1751551535555.jpg',
+            'moments/FB_IMG_1751551495908.jpg',
+            'moments/FB_IMG_1751551457152.jpg',
+            'moments/FB_IMG 1751551305753.jpg',
+            'moments/FB IMG 1751551145317.jpg',
+            'moments/FB IMG 1751551185046.jpg',
+            'moments/FB_IMG_1751551177065.jpg',
+            'moments/FB_IMG_1751551287898.jpg',
+            'moments/FB_IMG 1751551297615.jpg',
+            'moments/FB JMG 1751551257681.jpg',
+            'moments/FB_IMG_1751551134976.jpg',
+            'moments/FB_IMG 1751551406289.jpg',
+            'moments/FB_IMG 1751551255601.jpg',
+            'moments/FB JMG 1751551085019.jpg',
+            'moments/FB_IMG_1751551087788.jpg',
+            'moments/FB_IMG_1751551279478.jpg',
+            'moments/FB IMG 1751551249961.jpg',
+            'moments/FB JMG 1751551442463.jpg',
+            'moments/FB_IMG_1751551325204.jpg',
+            'moments/FB_IMG_1751551132774.jpg',
+            'moments/FB_IMG 1751551615546.jpg',
+            'moments/FB IMG 1751551113121.jpg',
+            'moments/FB_JMG 1751551330479.jpg',
+            'moments/FB_IMG_1751551560533.jpg',
+            'moments/FB_IMG 1751551476759.jpg',
+            'moments/FB_IMG_1751551649516.jpg',
+            'moments/FB JMG 1751554289153.jpg',
+            'moments/FB_IMG 1751551117216.jpg',
+            'moments/FB_IMG_1751551459022.jpg',
+            'moments/FB IMG 1751551124620.jpg',
+            'moments/FB JMG 1751551606171.jpg',
+            'moments/FB_IMG_1751551531869.jpg',
+            'moments/FB_IMG 1751551500746.jpg',
+            'moments/FB_IMG 1751551579857.jpg',
+            'moments/FB IMG 1751551516237.jpg',
+            'moments/FB_IMG_1751551646322.jpg',
+            'moments/FB_IMG_1751554314186.jpg'
+        ];
+
+        // Data Anggota (Sangat Dapat Disesuaikan)
+        const membersData = [
+            // Kepemimpinan
+            { id: 'calon_ketua_1', name: 'Atha Yazid', role: 'Calon Ketua', division: 'Kepemimpinan', image: 'ketua/atha.jpg', social: {} },
+            { id: 'calon_ketua_2', name: 'M. Alfathuri', role: 'Calon Ketua', division: 'Kepemimpinan', image: 'ketua/alfa.jpg', social: {} },
+            { id: 'calon_ketua_2', name: 'TM Zain', role: 'Calon Ketua', division: 'Kepemimpinan', image: 'ketua/zain.jpg', social: {} },
+            { id: 'calon_bendahara_1', name: 'Bunga Miftahuljannah', role: 'Calon Bendahara', division: 'Kepemimpinan', image: 'bendahara/mifta.jpg', social: {} },
+            { id: 'calon_bendahara_2', name: 'Luthfi Nurmalasari', role: 'Calon Bendahara', division: 'Kepemimpinan', image: 'bendahara/luthfi.jpg', social: {} },
+            { id: 'calon_bendahara_3', name: 'Sasi Kirana', role: 'Calon Bendahara', division: 'Kepemimpinan', image: 'bendahara/sasi.jpg', social: {} },
+            { id: 'calon_sekretaris_1', name: 'Annisa Humairah', role: 'Calon Sekretaris', division: 'Kepemimpinan', image: 'sekretaris/nisa.jpg', social: {} },
+            { id: 'calon_sekretaris_2', name: 'Nabila Putri', role: 'Calon Sekretaris', division: 'Kepemimpinan', image: 'sekretaris/nabila.jpg', social: {} },
+            { id: 'calon_sekretaris_3', name: 'Syifa\'ul Fuadiyah', role: 'Calon Sekretaris', division: 'Kepemimpinan', image: 'sekretaris/syifa.jpg', social: {} },
+
+            // Pelatih & Staf
+            { id: 'pembina_arman', name: 'Arman, S.Pd', role: 'Pembina', division: 'Pelatih', image: 'pelatih/arman.jpg', social: {} },
+            { id: 'chief_emil', name: 'Emil Satria Putra, SE', role: 'Chief Coach', division: 'Pelatih', image: 'pelatih/emil.jpg', social: {} },
+            { id: 'drill_alfarsi', name: 'Al Farsi, S.Pd', role: 'Drill & Design', division: 'Pelatih', image: 'pelatih/farsi.jpg', social: {} },
+            { id: 'brass_waginah', name: 'Waginah, S.T', role: 'Pelatih Brass Line', division: 'Pelatih', image: 'waginah/emil.jpg' , social: {} },
+            { id: 'brass_aulia', name: 'Aulia Putra Zalvi, S.TP', role: 'Pelatih Brass Line', division: 'Pelatih', image: 'pelatih/aulia.jpg', social: {} },
+            { id: 'pit_suryadi', name: 'Suryadi Abdi, S.Kom', role: 'Pelatih Pit Instrument', division: 'Pelatih', image: 'pelatih/emil.jpg', social: {} },
+            { id: 'perc_mukhtar', name: 'Mukhtar Riza Akbar, S.Pd', role: 'Pelatih Percussion Line', division: 'Pelatih', image: 'pelatih/mukhtar.jpg', social: {} },
+            { id: 'perc_fahrurozi', name: 'M. Fahrurozi Nasution, S.Ak', role: 'Pelatih Percussion Line', division: 'Pelatih', image: 'pelatih/fahrurozi.jpg', social: {} },
+            { id: 'cg_fachrun', name: 'Fachrun Nisyha', role: 'Pelatih Colour Guard', division: 'Pelatih', image: 'pelatih/emil.jpg', social: {} },
+            { id: 'cg_sugiarto', name: 'Sugiarto, S.Pd', role: 'Pelatih Colour Guard', division: 'Pelatih', image: 'pelatih/sugiarto.jpg', social: {} },
+
+            // Anggota Umum (tambahkan lebih banyak sesuai kebutuhan, beberapa untuk anggota aktif)
+            { id: 'member1', name: 'Siti Aminah', role: 'Anggota', division: 'Brass', image: 'pelatih/emil.jpg', social: { instagram: 'siti.aminah' } },
+            { id: 'member2', name: 'Budi Santoso', role: 'Anggota', division: 'Percussion', image: 'pelatih/emil.jpg', social: { instagram: 'budi.santoso' } },
+            { id: 'member3', name: 'Dewi Lestari', role: 'Anggota', division: 'Colour Guard', image: 'pelatih/emil.jpg', social: { instagram: 'dewi.lestari' } },
+            { id: 'member4', name: 'Rizky Pratama', role: 'Anggota', division: 'Brass', image: 'pelatih/emil.jpg', social: { instagram: 'rizky.pratama' } },
+        ];
+
+        // Anggota Wisuda (Lulusan) - Data ini sekarang akan digunakan untuk slideshow, bukan kartu individu
+        const wisudaMembersData = [
+            { id: 'alumni1', name: 'Rina Permata', year: '2024', image: 'wisudas/FB_IMG_1751551332512.jpg', social: { instagram: 'rina.permata_alumni' } },
+            { id: 'alumni2', name: 'Doni Saputra', year: '2024', image: 'wisudas/FB_IMG_1751551333889.jpg', social: { instagram: 'doni.saputra_alumni' } },
+        ];
+
+        // Dummy data for main gallery slideshow images (replace with your actual image paths)
+        const galleryImages = [
+                'moments/FB_IMG 1751554331848.jpg',
+                'moments/FB_IMG 1751551529452.jpg',
+                'moments/FB_IMG_1751551187201.jpg',
+                'moments/FB_IMG 1751551311629.jpg',
+                'moments/FB_IMG 1751551190644.jpg',
+                'moments/FB IMG 1751551440335.jpg',
+                'moments/FB_IMG_1751551303694.jpg',
+                'moments/FB_IMG 1751551542612.jpg',
+                'moments/FB_IMG 1751551064989.jpg',
+                'moments/FB_IMG 1751551695476.jpg',
+                'moments/FB_IMG_1751551164472.jpg',
+                'moments/FB_IMG_1751551565156.jpg',
+                'moments/FB_IMG_1751551686971.jpg',
+                'moments/FB_IMG 1751551719501.jpg',
+                'moments/FB_IMG 1751551308365.jpg',
+                'moments/FB_IMG_1751551169261.jpg',
+                'moments/FB_IMG 1751551701632.jpg',
+                'moments/FB_IMG 1751551699292.jpg',
+                'moments/FB JMG 1751551507019.jpg',
+                'moments/FB_IMG_1751551567371.jpg',
+                'moments/FB_IMG 1751551570697.jpg',
+                'moments/FB_IMG 1751551611664.jpg',
+                'moments/FB IMG 1751551602444.jpg',
+                'moments/FB_IMG_1751551654724.jpg',
+                'moments/FB_IMG 1751551400635.jpg',
+                'moments/FB_IMG_1751551468781.jpg',
+                'moments/FB IMG 1751551480783.jpg',
+                'moments/FB_IMG_1751551518319.jpg',
+                'moments/FB_IMG_1751551523957.jpg',
+                'moments/FB_IMG 1751551474443.jpg',
+                'moments/FB JMG 1751551545873.jpg',
+                'moments/FB_IMG_1751551408349.jpg',
+                'moments/FB_IMG_1751554318448.jpg',
+                'moments/FB_IMG_1751554323072.jpg',
+                'moments/FB IMG 1751551403415.jpg',
+                'moments/FB JMG 1751551526188.jpg',
+                'moments/FB_IMG_1751551415322.jpg',
+                'moments/FB_IMG 1751551281776.jpg',
+                'moments/FB IMG 1751551448453.jpg',
+                'moments/FB IMG 1751551521095.jpg',
+                'moments/FB_IMG_1751551432679.jpg',
+                'moments/FB_IMG 1751551261027.jpg',
+                'moments/FB IMG 1751551171811.jpg',
+                'moments/FB_IMG_1751551544276.jpg',
+                'moments/FB_IMG_1751551262990.jpg',
+                'moments/FB_IMG_1751551286068.jpg',
+                'moments/FB_IMG_1751551540766.jpg',
+                'moments/FB IMG 1751551697458.jpg',
+                'moments/FB JMG 1751551328747.jpg',
+                'moments/FB_IMG_1751551180445.jpg',
+                'moments/FB IMG 1751551074969.jpg',
+                'moments/FB_IMG 1751551251779.jpg',
+                'moments/FB IMG 1751551657389.jpg',
+                'moments/FB_IMG_1751551644625.jpg',
+                'moments/FB_IMG 1751551491412.jpg',
+                'moments/FB_IMG_1751551446553.jpg',
+                'moments/FB IMG 1751551512846.jpg',
+                'moments/FB_IMG_1751551555538.jpg',
+                'moments/FB_IMG 1751551461103.jpg',
+                'moments/FB_IMG 1751551665772.jpg',
+                'moments/FB IMG 1751551471415.jpg',
+                'moments/FB JMG_1751551688888.jpg',
+                'moments/FB_IMG_1751551452924.jpg',
+                'moments/FB_IMG 1751551483060.jpg',
+                'moments/FB JMG 1751551485306.jpg',
+                'moments/FB JMG 1751551613745.jpg',
+                'moments/FB IMG_1751554325600.jpg',
+                'moments/FB_IMG_1751554312025.jpg',
+                'moments/FB IMG 1751551141147.jpg',
+                'moments/FB_IMG_1751551174356.jpg',
+                'moments/FB_IMG_1751551219812.jpg',
+                'moments/FB_IMG 1751551213040.jpg',
+                'moments/FB IMG 1751551217366.jpg',
+                'moments/FB_IMG 1751551327007.jpg',
+                'moments/FB_IMG 1751551061178.jpg',
+                'moments/FB IMG 1751551290215.jpg',
+                'moments/FB_IMG 1751551436335.jpg',
+                'moments/FB IMG 1751551295156.jpg',
+                'moments/FB_IMG_1751551089993.jpg',
+                'moments/FB_IMG_1751551595459.jpg',
+                'moments/FB_IMG_1751551352242.jpg',
+                'moments/FB IMG 1751551504107.jpg',
+                'moments/FB_IMG_1751551508866.jpg',
+                'moments/FB_IMG_1751551573778.jpg',
+                'moments/FB_IMG 1751551587673.jpg',
+                'moments/FB IMG 1751551641463.jpg',
+                'moments/FB IMG_1751551466819.jpg',
+                'moments/FB_IMG_1751551138413.jpg',
+                'moments/FB IMG 1751551609868.jpg',
+                'moments/FB_IMG_1751551684809.jpg',
+                'moments/FB_IMG 1751551096981.jpg',
+                'moments/FB_IMG_1751551412891.jpg',
+                'moments/FB_IMG_1751551510616.jpg',
+                'moments/FB_IMG_1751551537438.jpg',
+                'moments/FB IMG 1751551047066.jpg',
+                'moments/FB_IMG_1751551126901.jpg',
+                'moments/FB_IMG_1751551557304.jpg',
+                'moments/FB_IMG 1751551182873.jpg',
+                'moments/FB_IMG 1751551533787.jpg',
+                'moments/FB_IMG_1751551493744.jpg',
+                'moments/FB_IMG_1751554316484.jpg',
+                'moments/FB_IMG_1751554310211.jpg',
+                'moments/FB IMG 1751551143277.jpg',
+                'moments/FB IMG 1751551159211.jpg',
+                'moments/FB_IMG_1751551161574.jpg',
+                'moments/FB_IMG_1751551215343.jpg',
+                'moments/FB IMG 1751551292491.jpg',
+                'moments/FB_IMG_1751551283871.jpg',
+                'moments/FB_IMG_1751551547495.jpg',
+                'moments/FB IMG 1751551129232.jpg',
+                'moments/FB IMG 1751551067318.jpg',
+                'moments/FB IMG 1751551562499.jpg',
+                'moments/FB_IMG_1751551430146.jpg',
+                'moments/FB_IMG_1751551444510.jpg',
+                'moments/FB IMG 1751551323480.jpg',
+                'moments/FB IMG 1751554333937.jpg',
+                'moments/FB JMG 1751551321759.jpg',
+                'moments/FB_IMG_1751551692968.jpg',
+                'moments/FB_IMG 1751551121560.jpg',
+                'moments/FB IMG 1751551115759.jpg',
+                'moments/FB_IMG_1751551608072.jpg',
+                'moments/FB_IMG_1751551497935.jpg',
+                'moments/FB_IMG_1751551604443.jpg',
+                'moments/FB IMG 1751551463093.jpg',
+                'moments/FB_IMG_1751551662129.jpg',
+                'moments/FB_IMG_1751551478818.jpg',
+                'moments/FB_IMG_1751551549159.jpg',
+                'moments/FB_IMG 1751551487503.jpg',
+                'moments/FB IMG 1751551450704.jpg',
+                'moments/FB_IMG_1751551558983.jpg',
+                'moments/FB_IMG_1751551552128.jpg',
+                'moments/FB IMG 1751554308047.jpg',
+                'moments/FB IMG 1751551535555.jpg',
+                'moments/FB_IMG_1751551495908.jpg',
+                'moments/FB_IMG_1751551457152.jpg',
+                'moments/FB_IMG 1751551305753.jpg',
+                'moments/FB IMG 1751551145317.jpg',
+                'moments/FB IMG 1751551185046.jpg',
+                'moments/FB_IMG_1751551177065.jpg',
+                'moments/FB_IMG_1751551287898.jpg',
+                'moments/FB_IMG 1751551297615.jpg',
+                'moments/FB JMG 1751551257681.jpg',
+                'moments/FB_IMG_1751551134976.jpg',
+                'moments/FB_IMG 1751551406289.jpg',
+                'moments/FB_IMG 1751551255601.jpg',
+                'moments/FB JMG 1751551085019.jpg',
+                'moments/FB_IMG_1751551087788.jpg',
+                'moments/FB_IMG_1751551279478.jpg',
+                'moments/FB IMG 1751551249961.jpg',
+                'moments/FB JMG 1751551442463.jpg',
+                'moments/FB_IMG_1751551325204.jpg',
+                'moments/FB_IMG_1751551132774.jpg',
+                'moments/FB_IMG 1751551615546.jpg',
+                'moments/FB IMG 1751551113121.jpg',
+                'moments/FB_JMG 1751551330479.jpg',
+                'moments/FB_IMG_1751551560533.jpg',
+                'moments/FB_IMG 1751551476759.jpg',
+                'moments/FB_IMG_1751551649516.jpg',
+                'moments/FB JMG 1751554289153.jpg',
+                'moments/FB_IMG 1751551117216.jpg',
+                'moments/FB_IMG_1751551459022.jpg',
+                'moments/FB IMG 1751551124620.jpg',
+                'moments/FB JMG 1751551606171.jpg',
+                'moments/FB_IMG_1751551531869.jpg',
+                'moments/FB_IMG 1751551500746.jpg',
+                'moments/FB_IMG 1751551579857.jpg',
+                'moments/FB IMG 1751551516237.jpg',
+                'moments/FB_IMG_1751551646322.jpg',
+                'moments/FB_IMG_1751554314186.jpg'
+        ];
+
+        // New array for alumni slideshow images (replace with your actual alumni image paths)
+        const alumniGalleryImages = [
+            'wisudas/1.jpg', // Contoh gambar dari folder alumni
+            'wisudas/2.jpg',
+        ];
+
+
+        // --- Fungsi Utilitas ---
+
+        // Fungsi untuk mendapatkan jalur gambar dengan aman dengan fallback
+        function getImagePath(path, defaultText = 'No Image') {
+            return path || `https://placehold.co/128x128/228B22/F5F5DC?text=${defaultText}`;
+        }
+
+        // Fungsi untuk membuat HTML kartu anggota
+        function createMemberCard(member) {
+            const socialIconsHtml = Object.keys(member.social || {}).map(platform => {
+                const iconClass = {
+                    instagram: 'fab fa-instagram',
+                    facebook: 'fab fa-facebook-f',
+                    youtube: 'fab fa-youtube',
+                }[platform] || '';
+                let socialLink = '#';
+                if (platform === 'instagram') socialLink = `https://instagram.com/${member.social[platform]}`;
+                else if (platform === 'facebook') socialLink = `https://facebook.com/${member.social[platform]}`;
+                else if (platform === 'youtube') socialLink = `https://youtube.com/user/${member.social[platform]}`;
+                return member.social[platform] ? `<a href="${socialLink}" target="_blank" aria-label="${platform}"><i class="${iconClass}"></i></a>` : '';
+            }).join('');
+
+            return `
+                <div class="member-card" data-member-id="${member.id}">
+                    <div class="member-default-content">
+                        <div class="w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-primary-green to-beige rounded-full flex items-center justify-content-center overflow-hidden border-2 border-primary-green-dark">
+                            <img src="${getImagePath(member.image, member.name.split(' ')[0])}" alt="Foto ${member.name}" class="w-full h-full object-cover member-image-clickable">
+                        </div>
+                        <h3 class="font-bold text-lg mb-1 text-light-text-primary">${member.name}</h3>
+                        <p class="text-primary-green font-semibold mb-2">${member.role}</p>
+                        <p class="text-sm text-light-text-secondary">${member.division}</p>
+                    </div>
+                    <div class="member-hover-content">
+                        <h3 class="text-white text-xl font-bold">${member.name}</h3>
+                        <p class="text-beige text-sm mb-2">${member.role}</p>
+                        <div class="social-icons">
+                            ${socialIconsHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Fungsi untuk membuat HTML kartu wisuda (tidak lagi digunakan untuk rendering kartu, hanya untuk data)
+        function createWisudaCard(member) {
+            const socialIconsHtml = Object.keys(member.social || {}).map(platform => {
+                const iconClass = {
+                    instagram: 'fab fa-instagram',
+                    facebook: 'fab fa-facebook-f',
+                    youtube: 'fab fa-youtube',
+                }[platform] || '';
+                let socialLink = '#';
+                if (platform === 'instagram') socialLink = `https://instagram.com/${member.social[platform]}`;
+                else if (platform === 'facebook') socialLink = `https://facebook.com/${member.social[platform]}`;
+                else if (platform === 'twitter') socialLink = `https://twitter.com/${member.social[platform]}`;
+                else if (platform === 'youtube') socialLink = `https://youtube.com/user/${member.social[platform]}`;
+                else if (platform === 'tiktok') socialLink = `https://tiktok.com/@${member.social[platform]}`;
+
+                return member.social[platform] ? `<a href="${socialLink}" target="_blank" aria-label="${platform}"><i class="${iconClass}"></i></a>` : '';
+            }).join('');
+
+            return `
+                <div class="member-card" data-member-id="${member.id}">
+                    <div class="member-default-content">
+                        <div class="w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-primary-green to-beige rounded-full flex items-center justify-content-center overflow-hidden border-2 border-primary-green-dark">
+                            <img src="${getImagePath(member.image, member.name.split(' ')[0])}" alt="Foto ${member.name}" class="w-full h-full object-cover member-image-clickable">
+                        </div>
+                        <h3 class="font-bold text-lg mb-1 text-light-text-primary">${member.name}</h3>
+                        <p class="text-primary-green font-semibold mb-2">Alumni</p>
+                        <p class="text-sm text-light-text-secondary">Wisuda ${member.year}</p>
+                    </div>
+                    <div class="member-hover-content">
+                        <h3 class="text-white text-xl font-bold">${member.name}</h3>
+                        <p class="text-beige text-sm mb-2">Alumni ${member.year}</p>
+                        <div class="social-icons">
+                            ${socialIconsHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+
+        // --- Slideshow Logic (Gallery & Alumni) ---
+        let slideshowStates = {}; // To hold slideIndex and slideTimer for each slideshow
+
+        function initSlideshow(containerId, imagePaths, slideDuration = 1000) {
+            slideshowStates[containerId] = {
+                slideIndex: 1,
+                slideTimer: null,
+                imagePaths: imagePaths,
+                slideDuration: slideDuration
+            };
+            loadSlideshowImagesIntoContainer(containerId);
+        }
+
+        function loadSlideshowImagesIntoContainer(containerId) {
+            const state = slideshowStates[containerId];
+            if (!state) return;
+
+            const slideshowContainer = document.getElementById(containerId);
+            if (!slideshowContainer) return;
+
+            // Clear existing slides and dots
+            const existingSlides = slideshowContainer.querySelectorAll('.mySlides');
+            existingSlides.forEach(slide => slide.remove());
+
+            let slideDotsContainer = slideshowContainer.querySelector('.slide-dots');
+            if (!slideDotsContainer) {
+                slideDotsContainer = document.createElement('div');
+                slideDotsContainer.className = 'slide-dots';
+                slideshowContainer.appendChild(slideDotsContainer);
+            }
+            slideDotsContainer.innerHTML = ''; // Clear existing dots
+
+            // Create prev/next buttons if they don't exist
+            let prevBtn = slideshowContainer.querySelector('.prev');
+            if (!prevBtn) {
+                prevBtn = document.createElement('a');
+                prevBtn.className = 'prev';
+                prevBtn.innerHTML = '&#10094;';
+                prevBtn.onclick = () => plusSlides(containerId, -1);
+                slideshowContainer.insertBefore(prevBtn, slideshowContainer.firstChild);
+            }
+
+            let nextBtn = slideshowContainer.querySelector('.next');
+            if (!nextBtn) {
+                nextBtn = document.createElement('a');
+                nextBtn.className = 'next';
+                nextBtn.innerHTML = '&#10095;';
+                nextBtn.onclick = () => plusSlides(containerId, 1);
+                slideshowContainer.appendChild(nextBtn);
+            }
+
+
+            state.imagePaths.forEach((path, index) => {
+                const slideDiv = document.createElement('img');
+                slideDiv.className = 'mySlides';
+                slideDiv.src = path;
+                slideDiv.alt = `Image ${index + 1}`;
+                slideshowContainer.insertBefore(slideDiv, nextBtn); // Insert before next button
+
+                const dotSpan = document.createElement('span');
+                dotSpan.className = 'dot';
+                dotSpan.onclick = () => currentSlide(containerId, index + 1);
+                slideDotsContainer.appendChild(dotSpan);
+            });
+
+            showSpecificSlides(containerId, state.slideIndex);
+        }
+
+        function showSpecificSlides(containerId, n) {
+            const state = slideshowStates[containerId];
+            if (!state) return;
+
+            const slideshowContainer = document.getElementById(containerId);
+            if (!slideshowContainer) return;
+
+            const slides = slideshowContainer.getElementsByClassName("mySlides");
+            const dots = slideshowContainer.getElementsByClassName("dot");
+
+            if (slides.length === 0) return;
+
+            if (n > slides.length) { state.slideIndex = 1 }
+            if (n < 1) { state.slideIndex = slides.length }
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active-dot", "");
+            }
+
+            slides[state.slideIndex - 1].style.display = "block";
+            dots[state.slideIndex - 1].className += " active-dot";
+
+            clearTimeout(state.slideTimer);
+            state.slideTimer = setTimeout(() => plusSlides(containerId, 1), state.slideDuration);
+        }
+
+        function plusSlides(containerId, n) {
+            const state = slideshowStates[containerId];
+            if (state) {
+                showSpecificSlides(containerId, state.slideIndex += n);
+            }
+        }
+
+        function currentSlide(containerId, n) {
+            const state = slideshowStates[containerId];
+            if (state) {
+                showSpecificSlides(containerId, state.slideIndex = n);
+            }
+        }
+
+
+        // --- Hero Section Background Carousel Logic ---
+        let heroImageIndex = 0;
+        let heroCarouselInterval;
+
+        function startHeroBackgroundCarousel() {
+            const heroBgElement = document.getElementById('hero-carousel-bg');
+            if (!heroBgElement || heroBackgroundImages.length === 0) return;
+
+            // Set initial background
+            heroBgElement.style.backgroundImage = `url('${heroBackgroundImages[heroImageIndex]}')`;
+            heroBgElement.classList.add('active'); // Activate opacity transition
+
+            heroCarouselInterval = setInterval(() => {
+                heroBgElement.classList.remove('active'); // Start fade out
+
+                setTimeout(() => {
+                    heroImageIndex = (heroImageIndex + 1) % heroBackgroundImages.length;
+                    heroBgElement.style.backgroundImage = `url('${heroBackgroundImages[heroImageIndex]}')`;
+                    heroBgElement.classList.add('active'); // Fade in new image
+                }, 1000); // Match CSS transition duration for smooth fade
+            }, 7000); // Change image every 7 seconds
+        }
+
+
+        // --- Eksekusi Skrip Utama ---
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Preloader
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                    preloader.style.transition = 'opacity 0.5s ease-out, visibility 0.5s ease-out';
+                }, 1000); // Tunggu 1 detik sebelum memudar
+            }
+
+            // Inisialisasi AOS
+            AOS.init({
+                duration: 1000,
+                once: true,
+                mirror: false,
+            });
+
+            // Mobile Menu Button
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('-translate-x-full');
+            });
+
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('-translate-x-full');
+                });
+            });
+
+            // Scroll Progress Bar & Back to Top
+            const scrollProgressBar = document.getElementById('scroll-progress');
+            const backToTopBtn = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', () => {
+                const scrollTop = document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrollProgress = (scrollTop / scrollHeight) * 100;
+                scrollProgressBar.style.width = scrollProgress + '%';
+
+                if (scrollTop > 300) {
+                    backToTopBtn.style.display = 'flex';
+                } else {
+                    backToTopBtn.style.display = 'none';
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Milad Countdown for September 1st
+            function updateMiladCountdown() {
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                let miladDate = new Date(`September 1, ${currentYear} 00:00:00`);
+
+                if (now > miladDate) {
+                    miladDate = new Date(`September 1, ${currentYear + 1} 00:00:00`);
+                }
+
+                const distance = miladDate - now;
+
+                const msInSecond = 1000;
+                const msInMinute = msInSecond * 60;
+                const msInHour = msInMinute * 60;
+                const msInDay = msInHour * 24;
+                const msInMonth = msInDay * 30.44; // Average days in a month
+
+                const months = Math.floor(distance / msInMonth);
+                const remainingDistanceAfterMonths = distance % msInMonth;
+                const remainingDays = Math.floor(remainingDistanceAfterMonths / msInDay);
+                const hours = Math.floor((remainingDistanceAfterMonths % msInDay) / msInHour);
+                const minutes = Math.floor((remainingDistanceAfterMonths % msInHour) / msInMinute);
+                const seconds = Math.floor((remainingDistanceAfterMonths % msInMinute) / msInSecond);
+
+                const miladMonthsEl = document.getElementById("milad-months");
+                const miladRemainingDaysEl = document.getElementById("milad-remaining-days");
+                const miladHoursEl = document.getElementById("milad-hours");
+                const miladMinutesEl = document.getElementById("milad-minutes");
+                const miladSecondsEl = document.getElementById("milad-seconds");
+
+                if (miladMonthsEl) miladMonthsEl.innerHTML = String(months).padStart(2, '0');
+                if (miladRemainingDaysEl) miladRemainingDaysEl.innerHTML = String(remainingDays).padStart(2, '0');
+                if (miladHoursEl) miladHoursEl.innerHTML = String(hours).padStart(2, '0');
+                if (miladMinutesEl) miladMinutesEl.innerHTML = String(minutes).padStart(2, '0');
+                if (miladSecondsEl) miladSecondsEl.innerHTML = String(seconds).padStart(2, '0');
+
+                if (distance < 0) {
+                    clearInterval(miladCountdownInterval);
+                    const miladCountdownEl = document.getElementById("milad-countdown");
+                    if (miladCountdownEl) miladCountdownEl.innerHTML = "<div class='col-span-5 text-center text-xl font-bold'>SELAMAT MILAD BIMANDA!</div>";
+                }
+            }
+            const miladCountdownInterval = setInterval(updateMiladCountdown, 1000);
+            updateMiladCountdown(); // Initial call
+
+            // --- Member Section Logic ---
+
+            const leadershipGrid = document.getElementById('leadership-grid');
+            const coachesGrid = document.getElementById('coaches-grid');
+            const activeMembersGrid = document.getElementById('active-members-grid');
+            // Removed wisudasGrid as it's now a slideshow
+
+            const memberSearchInput = document.getElementById('member-search-input');
+
+            function renderMembers(filteredMembers = membersData) {
+                // Clear existing content to prevent duplication
+                if (leadershipGrid) leadershipGrid.innerHTML = '';
+                if (coachesGrid) coachesGrid.innerHTML = '';
+                if (activeMembersGrid) activeMembersGrid.innerHTML = '';
+                // No need to clear wisudasGrid as it's now a slideshow managed by initSlideshow
+
+                const leadershipMembers = filteredMembers.filter(member => member.division === 'Kepemimpinan');
+                const coaches = filteredMembers.filter(member => member.division === 'Pelatih');
+                const activeMembers = filteredMembers.filter(member => member.division !== 'Kepemimpinan' && member.division !== 'Pelatih').slice(0, 5); // Example: top 5
+
+                leadershipMembers.forEach(member => {
+                    if (leadershipGrid) leadershipGrid.innerHTML += createMemberCard(member);
+                });
+                coaches.forEach(coach => {
+                    if (coachesGrid) coachesGrid.innerHTML += createMemberCard(coach);
+                });
+                activeMembers.forEach(member => {
+                    if (activeMembersGrid) activeMembersGrid.innerHTML += createMemberCard(member);
+                });
+            }
+
+            function filterMembers() {
+                const searchTerm = memberSearchInput.value.toLowerCase();
+                const filtered = membersData.filter(member =>
+                    member.name.toLowerCase().includes(searchTerm) ||
+                    member.role.toLowerCase().includes(searchTerm) ||
+                    member.division.toLowerCase().includes(searchTerm)
+                );
+                renderMembers(filtered);
+            }
+
+            // Initial render
+            renderMembers();
+
+            // Add event listener for search input
+            if (memberSearchInput) {
+                memberSearchInput.addEventListener('input', filterMembers);
+            }
+
+            // Member Profile Modal Logic (on image click)
+            const memberProfileModal = document.getElementById('member-profile-modal');
+            const modalMemberImage = document.getElementById('modal-member-image');
+            const modalMemberName = document.getElementById('modal-member-name');
+            const modalMemberRole = document.getElementById('modal-member-role');
+            const modalMemberDivision = document.getElementById('modal-member-division');
+            const modalMemberSocial = document.getElementById('modal-member-social');
+
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('member-image-clickable')) {
+                    const memberCard = e.target.closest('.member-card');
+                    if (memberCard) {
+                        const memberId = memberCard.dataset.memberId;
+                        const member = membersData.find(m => m.id === memberId) || wisudaMembersData.find(m => m.id === memberId);
+
+                        if (member) {
+                            modalMemberImage.src = getImagePath(member.image, member.name.split(' ')[0]);
+                            modalMemberName.textContent = member.name;
+                            modalMemberRole.textContent = member.role;
+                            modalMemberDivision.textContent = member.division || (member.year ? `Alumni ${member.year}` : '');
+
+                            // Populate social icons for the modal
+                            const socialIconsHtml = Object.keys(member.social || {}).map(platform => {
+                                const iconClass = {
+                                    instagram: 'fab fa-instagram',
+                                    facebook: 'fab fa-facebook-f',
+                                    twitter: 'fab fa-twitter',
+                                    youtube: 'fab fa-youtube',
+                                    tiktok: 'fab fa-tiktok'
+                                }[platform] || '';
+                                let socialLink = '#';
+                                if (platform === 'instagram') socialLink = `https://instagram.com/${member.social[platform]}`;
+                                else if (platform === 'facebook') socialLink = `https://facebook.com/${member.social[platform]}`;
+                                else if (platform === 'twitter') socialLink = `https://twitter.com/${member.social[platform]}`;
+                                else if (platform === 'youtube') socialLink = `https://youtube.com/user/${member.social[platform]}`;
+                                else if (platform === 'tiktok') socialLink = `https://tiktok.com/@${member.social[platform]}`;
+                                return member.social[platform] ? `<a href="${socialLink}" target="_blank" aria-label="${platform}"><i class="${iconClass}"></i></a>` : '';
+                            }).join('');
+                            modalMemberSocial.innerHTML = socialIconsHtml;
+
+                            memberProfileModal.classList.add('active');
+                            gsap.fromTo(memberProfileModal.querySelector('.modal-content'), { scale: 0.95, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)" });
+                        }
+                    }
+                }
+            });
+
+
+            // --- "Tanya Sejarawan Bimanda" (Gemini API) Logic ---
+            const historianModal = document.getElementById('historian-modal');
+            const askHistorianBtn = document.getElementById('ask-historian-btn');
+            const submitHistorianQuestionBtn = document.getElementById('submit-historian-question');
+            const historianQuestionInput = document.getElementById('historian-question');
+            const historianAnswerText = document.getElementById('historian-answer-text');
+            const historianLoading = document.getElementById('historian-loading');
+
+            askHistorianBtn.addEventListener('click', () => {
+                historianModal.classList.remove('hidden');
+                gsap.fromTo(historianModal.querySelector('.modal-content'), { scale: 0.95, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)" });
+                historianAnswerText.textContent = 'Jawaban akan muncul di sini.'; // Reset answer
+                historianLoading.classList.add('hidden'); // Hide loading
+            });
+
+            submitHistorianQuestionBtn.addEventListener('click', async () => {
+                const question = historianQuestionInput.value.trim();
+                if (!question) {
+                    historianAnswerText.textContent = "Mohon masukkan pertanyaan Anda.";
+                    return;
+                }
+
+                historianAnswerText.textContent = ''; // Clear previous answer
+                historianLoading.classList.remove('hidden'); // Show loading spinner
+                submitHistorianQuestionBtn.disabled = true;
+
+                const fullHistoryContext = `
+                    Sejarah Bimanda MAN 2 Model Medan:
+                    1984: Didirikan sebagai Korsik (Korps Musik) tradisional, dipimpin oleh guru-guru di bawah Persatuan Guru Aliyah. Fokus pada musik instrumental untuk acara sekolah.
+                    2000: Dihidupkan kembali sebagai 'Bimus' dan di-branding ulang menjadi Bimanda ('Bina Musika MAN 2') oleh instruktur dari UNIMED dan MAN 1 Medan.
+                    2002-2003: Transisi menjadi Drum Band, memperkenalkan variasi instrumen dan partisipasi pawai/festival lokal.
+                    2005: Berevolusi menjadi Marching Band, fokus pada koreografi, formasi gerak, dan perpaduan musik kompleks. Mulai dikenal di tingkat kota dan provinsi.
+                    2010: Puncak evolusi menjadi Drum Corps. Standar instrumen, latihan intensif, fokus keunggulan teknis dan artistik. Menjadi kebanggaan MAN 2 Model Medan, bersaing nasional.
+                    1 September: Sejak 2012, diperingati sebagai Hari Milad resmi Bimanda, ditetapkan setelah penampilan perdana di kejuaraan nasional Bandung 2013 (tema 'Ainun-Habibie').
+                    2013: Debut kejuaraan nasional di Bandung dengan tema 'Ainun-Habibie'.
+                    2014: Tampil memukau di USU RMMB Championship.
+                    2015: Penampilan ikonik di GPMB Istora Senayan dengan tema 'Under the Sea'.
+                    2017: Partisipasi di IMPC 2017 dan menampilkan 'Kirab Nusantara' di Piala Gubernur UPT.
+                    2023: Diundang tampil di Istana Negara.
+                    2025: Juara Umum Tanjung Balai Open Marching Festival (24–26 Jan), memenangkan Division Challenge, Sound Sport, Street Parade, Best Field Commander, Best Colour Guard, Best Music & Visual Performance, dan Runner-up Drumline Battle. Juga meraih 3rd Place (Senior Challenge) di Marching Festival III Asahan (Juni 2025).
+                    Tim Pelatih: Pembina: Arman, S.Pd; Chief Coach: Emil Satria Putra, SE; Drill & Design: Al Farsi, S.Pd; Brass Line: Waginah, S.T & Aulia Putra Zalvi, S.TP; Pit Instrument: Suryadi Abdi, S.Kom; Percussion Line: Mukhtar Riza Akbar, S.Pd & M. Fahrurozi Nasution, S.Ak; Colour Guard: Fachrun Nisyha & Sugiarto, S.Pd.
+                    Nilai-nilai: Disiplin, kekompakan tim, peningkatan berkelanjutan.
+                `;
+
+                const promptForAI = `Berdasarkan informasi sejarah Bimanda MAN 2 Model Medan berikut, jawab pertanyaan ini: "${question}"\n\nInformasi: ${fullHistoryContext}\n\nBerikan jawaban yang ringkas dan informatif dalam Bahasa Indonesia.`;
+                const answer = await callGeminiAPI(promptForAI);
+
+                historianAnswerText.textContent = answer;
+                historianLoading.classList.add('hidden'); // Hide loading
+                submitHistorianQuestionBtn.disabled = false;
+            });
+
+            // --- WhatsApp Info Modal Logic ---
+            const whatsappFloatBtn = document.getElementById('whatsapp-float-btn');
+            const whatsappInfoModal = document.getElementById('whatsapp-info-modal');
+
+            whatsappFloatBtn.addEventListener('click', () => {
+                whatsappInfoModal.classList.remove('hidden');
+                gsap.fromTo(whatsappInfoModal.querySelector('.modal-content'), { scale: 0.95, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)" });
+            });
+
+            // --- Music Player Hover Logic ---
+            const musicToggleBtn = document.getElementById('music-toggle-btn');
+            const musicPlayerModal = document.getElementById('music-player-modal');
+            const backgroundMusic = document.getElementById('background-music');
+            const playPauseBtn = document.getElementById('play-pause-btn');
+
+            backgroundMusic.src = BACKGROUND_MUSIC_LINK;
+            backgroundMusic.volume = 0.5;
+
+            // Attempt to autoplay, if blocked, update button to 'play'
+            backgroundMusic.play().catch(error => {
+                console.log("Autoplay diblokir:", error);
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            });
+
+            musicToggleBtn.addEventListener('mouseover', () => {
+                musicPlayerModal.classList.add('active');
+            });
+
+            musicPlayerModal.addEventListener('mouseleave', () => {
+                musicPlayerModal.classList.remove('active');
+            });
+
+            playPauseBtn.addEventListener('click', () => {
+                if (backgroundMusic.paused) {
+                    backgroundMusic.play();
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                } else {
+                    backgroundMusic.pause();
+                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                }
+            });
+
+            backgroundMusic.addEventListener('play', () => {
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            });
+            backgroundMusic.addEventListener('pause', () => {
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            });
+
+            // --- Gallery Slideshow Initialization ---
+            initSlideshow('gallery-slideshow-container', galleryImages, 1500); // Main gallery slideshow
+            initSlideshow('alumni-slideshow-container', alumniGalleryImages, 1500); // Alumni slideshow
+
+
+            // --- Contact Form Submission Logic ---
+            const contactForm = document.getElementById('contact-form');
+            const contactSuccessModal = document.getElementById('contact-success-modal');
+
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault(); // Prevent actual form submission
+
+                const name = document.getElementById('contact-name').value;
+                const email = document.getElementById('contact-email').value;
+                const message = document.getElementById('contact-message').value;
+
+                // Construct WhatsApp message
+                const whatsappMessage = `Halo Admin Bimanda,\n\nSaya ingin mengirim pesan:\n\nNama: ${name}\nEmail: ${email}\nPesan: ${message}\n\nMohon segera direspon. Terima kasih.`;
+                const encodedMessage = encodeURIComponent(whatsappMessage);
+                
+                // Open WhatsApp chat
+                window.open(`https://wa.me/${WHATSAPP_ADMIN_NUMBER}?text=${encodedMessage}`, '_blank');
+
+                // Show success modal
+                contactSuccessModal.classList.remove('hidden');
+                gsap.fromTo(contactSuccessModal.querySelector('.modal-content'), { scale: 0.95, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)" });
+
+                // Optionally clear the form
+                contactForm.reset();
+            });
+
+            // --- Global Modal Close Buttons ---
+            document.querySelectorAll('.modal-close-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const parentModal = e.target.closest('.modal');
+                    if (parentModal) {
+                        gsap.to(parentModal.querySelector('.modal-content'), {
+                            scale: 0.95, opacity: 0, duration: 0.3, ease: "power2.in",
+                            onComplete: () => {
+                                parentModal.classList.add('hidden');
+                                parentModal.classList.remove('active'); // Ensure active class is removed
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Close modals when clicking outside the content
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        gsap.to(modal.querySelector('.modal-content'), {
+                            scale: 0.95, opacity: 0, duration: 0.3, ease: "power2.in",
+                            onComplete: () => {
+                                modal.classList.add('hidden');
+                                modal.classList.remove('active'); // Ensure active class is removed
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Konfigurasi Particles.js (warna disesuaikan dengan tema hijau)
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": "#F5F5DC" }, // Warna krem untuk partikel
+                    "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" }, "polygon": { "nb_sides": 5 } },
+                    "opacity": { "value": 0.5, "random": false, "anim": { "enable": false, "speed": 1, "opacity_min": 0.1, "sync": false } },
+                    "size": { "value": 3, "random": true, "anim": { "enable": false, "speed": 40, "size_min": 0.1, "sync": false } },
+                    "line_linked": { "enable": true, "distance": 150, "color": "#228B22", "opacity": 0.4, "width": 1 }, // Warna hijau utama untuk garis
+                    "move": { "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false, "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 } }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                    "modes": {
+                        "grab": { "distance": 200, "line_linked": { "opacity": 1 } },
+                        "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 },
+                        "repulse": { "distance": 200, "duration": 0.4 },
+                        "push": { "particles_nb": 4 },
+                        "remove": { "particles_nb": 2 }
+                    }
+                },
+                "retina_detect": true
+            });
+
+            // Start Hero Background Carousel
+            startHeroBackgroundCarousel();
+        });
+    </script>
+</body>
+</html>
